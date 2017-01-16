@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class  APDnsLogRecord;
+@class  APDnsLogRecord, ASDFilterRule;
 
 /////////////////////////////////////////////////////////////////////
 #pragma mark - APVPNManager Constants
@@ -118,7 +118,7 @@ extern NSString *APVpnManagerErrorDomain;
 /**
  Switch on/off of the fake vpn.
  */
-- (void)setEnabled:(BOOL)enabled;
+@property BOOL enabled;
 
 /**
  Sets mode of the vpn configuration.
@@ -137,5 +137,12 @@ extern NSString *APVpnManagerErrorDomain;
  and calls `completionBlock` with appropriate parameter.
  */
 - (void)obtainDnsLogRecords:(void (^)(NSArray <APDnsLogRecord *> *records))completionBlock;
+
+/**
+ Checks that rule is type of whitelist or blacklist,
+ if so, sends message to tunnel extension,
+ which notifies that extension needs reload whitelist/blacklist of the domains.
+ */
+- (void)sendReloadUserfilterDataIfRule:(ASDFilterRule *)rule;
 
 @end
